@@ -37,15 +37,11 @@ public class Tab2 extends Fragment {
             public void afterTextChanged(Editable s) {
 
 
-                int howManyInt = Integer.parseInt(howMany.getText().toString());
-                int completeInInt = Integer.parseInt(completeIn.getText().toString());
-                int projectedEndInt = howManyInt / completeInInt;
-                Log.i("Tab 2", "How many " + howManyInt);
-                Log.i("Tab 2", "Completed " + completeInInt);
+                double howManyInt = Integer.parseInt(howMany.getText().toString());
+                double completeInInt = Integer.parseInt(completeIn.getText().toString());
+                double projectedEndInt = Math.ceil(howManyInt / completeInInt);
 
-
-
-                projectedEnd.setText("" + projectedEndInt);
+                projectedEnd.setText("" + (int) projectedEndInt);
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

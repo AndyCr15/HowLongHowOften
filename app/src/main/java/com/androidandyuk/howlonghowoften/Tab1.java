@@ -11,11 +11,16 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 /**
  * Created by AndyCr15 on 09/05/2017.
  */
 
 public class Tab1 extends Fragment {
+
+    private AdView mAdView;
 
     @Nullable
     @Override
@@ -31,15 +36,18 @@ public class Tab1 extends Fragment {
         final EditText completeIn = (EditText) getView().findViewById(R.id.completeIn);
         final TextView projectedEnd = (TextView) getView().findViewById(R.id.projectedEnd);
 
+        mAdView = (AdView) getView().findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         TextWatcher inputTextWatcher = new TextWatcher() {
             public void afterTextChanged(Editable s) {
 
-                int howManyInt = Integer.parseInt(howMany.getText().toString());
-                int completeInInt = Integer.parseInt(completeIn.getText().toString());
-                int projectedEndInt = howManyInt / completeInInt;
+                double howManyInt = Integer.parseInt(howMany.getText().toString());
+                double completeInInt = Integer.parseInt(completeIn.getText().toString());
+                double projectedEndInt = Math.ceil(howManyInt / completeInInt);
 
-                projectedEnd.setText("" + projectedEndInt);
+                projectedEnd.setText("" + (int) projectedEndInt);
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
