@@ -20,10 +20,14 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:visibility="invisible"
+            android:background="@color/colorAccent"
+            android:elevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/startedCheck">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.501">
 
             <android.support.constraint.Guideline
                 android:id="@+id/guideline2"
@@ -60,11 +64,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:text="I've done"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="32dp"
+                android:text="I started"
                 android:textSize="18sp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/timeSince"
-                app:layout_constraintRight_toLeftOf="@+id/guideline2" />
+                app:layout_constraintRight_toLeftOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -80,45 +85,54 @@
                 android:id="@+id/timeSince"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="11dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                app:layout_constraintLeft_toLeftOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/iveDone" />
+                app:layout_constraintBaseline_toBaselineOf="@+id/textView21"
+                app:layout_constraintLeft_toLeftOf="@+id/guideline2" />
 
             <TextView
                 android:id="@+id/textView73"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Current rate completion in"
+                android:layout_marginRight="8dp"
+                android:text="Current rate, completion in"
                 android:textSize="18sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/currentCompletion"
-                app:layout_constraintRight_toLeftOf="@+id/guideline2"
-                android:layout_marginRight="0dp" />
+                app:layout_constraintRight_toLeftOf="@+id/guideline3" />
 
             <TextView
                 android:id="@+id/currentCompletion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
                 android:layout_marginStart="24dp"
                 android:text="___"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                tools:layout_editor_absoluteY="125dp"
-                app:layout_constraintLeft_toRightOf="@+id/textView73"
-                android:layout_marginLeft="8dp" />
+                app:layout_constraintBaseline_toBaselineOf="@+id/textView9"
+                app:layout_constraintLeft_toLeftOf="@+id/guideline3" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="248dp" />
 
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:text="days"
                 android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/currentCompletion"
-                app:layout_constraintTop_toBottomOf="@+id/timeSince" />
+                app:layout_constraintTop_toBottomOf="@+id/timeSince"
+                app:layout_constraintVertical_bias="0.0" />
         </android.support.constraint.ConstraintLayout>
 
         <CheckBox
@@ -200,12 +214,12 @@
             android:layout_height="wrap_content"
             android:text="Projected completion in"
             android:textSize="18sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/currentCompletion2"
+            app:layout_constraintBaseline_toBaselineOf="@+id/projectedEnd"
             app:layout_constraintRight_toLeftOf="@+id/guideline"
             android:layout_marginRight="0dp" />
 
         <TextView
-            android:id="@+id/currentCompletion2"
+            android:id="@+id/projectedEnd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="___"
@@ -222,7 +236,7 @@
             android:layout_height="wrap_content"
             android:text="days"
             android:textSize="18sp"
-            app:layout_constraintLeft_toRightOf="@+id/currentCompletion2"
+            app:layout_constraintLeft_toRightOf="@+id/projectedEnd"
             android:layout_marginLeft="11dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"

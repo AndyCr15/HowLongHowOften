@@ -35,6 +35,10 @@ public class Tab1 extends Fragment {
         final EditText howMany = (EditText) getView().findViewById(R.id.howMany);
         final EditText completeIn = (EditText) getView().findViewById(R.id.completeIn);
         final TextView projectedEnd = (TextView) getView().findViewById(R.id.projectedEnd);
+        final EditText iveDone = (EditText) getView().findViewById(R.id.iveDone);
+        final EditText timeSince = (EditText) getView().findViewById(R.id.timeSince);
+        final TextView currentCompletion = (TextView) getView().findViewById(R.id.currentCompletion);
+
 
         mAdView = (AdView) getView().findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -45,9 +49,33 @@ public class Tab1 extends Fragment {
 
                 double howManyInt = Integer.parseInt(howMany.getText().toString());
                 double completeInInt = Integer.parseInt(completeIn.getText().toString());
-                double projectedEndInt = Math.ceil(howManyInt / completeInInt);
+                double dailyRate = Math.ceil(howManyInt / completeInInt);
 
-                projectedEnd.setText("" + (int) projectedEndInt);
+                projectedEnd.setText("" + (int) dailyRate);
+
+                if(timeSince.getText() != null){
+
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        };
+
+        TextWatcher startedTextWatcher = new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+
+                double howManyInt = Integer.parseInt(howMany.getText().toString());
+                double iveDoneInt = Integer.parseInt(iveDone.getText().toString());
+                double timeSinceInt = Integer.parseInt(timeSince.getText().toString());
+                double currentRatePerDay = (iveDoneInt / timeSinceInt);
+                double itemsLeft = howManyInt - iveDoneInt;
+                double currentCompletionInt = Math.ceil(itemsLeft /currentRatePerDay);
+
+                currentCompletion.setText("" + (int) currentCompletionInt);
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -58,5 +86,7 @@ public class Tab1 extends Fragment {
         };
 
         completeIn.addTextChangedListener(inputTextWatcher);
+
+        timeSince.addTextChangedListener(startedTextWatcher);
     }
 }

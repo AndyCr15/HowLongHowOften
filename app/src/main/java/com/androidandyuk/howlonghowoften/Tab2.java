@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,9 @@ public class Tab2 extends Fragment {
         final EditText howMany = (EditText) getView().findViewById(R.id.howMany);
         final EditText completeIn = (EditText) getView().findViewById(R.id.completeIn);
         final TextView projectedEnd = (TextView) getView().findViewById(R.id.projectedEnd);
-
+        final EditText iveDone = (EditText) getView().findViewById(R.id.iveDone);
+        final EditText timeSince = (EditText) getView().findViewById(R.id.timeSince);
+        final TextView currentCompletion = (TextView) getView().findViewById(R.id.currentCompletion);
 
         TextWatcher inputTextWatcher = new TextWatcher() {
             public void afterTextChanged(Editable s) {
@@ -51,6 +52,28 @@ public class Tab2 extends Fragment {
             }
         };
 
+        TextWatcher startedTextWatcher = new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+
+                double howManyInt = Integer.parseInt(howMany.getText().toString());
+                double iveDoneInt = Integer.parseInt(iveDone.getText().toString());
+                double timeSinceInt = Integer.parseInt(timeSince.getText().toString());
+                double currentRatePerDay = (iveDoneInt / timeSinceInt);
+                double itemsLeft = howManyInt - iveDoneInt;
+                double currentCompletionInt = Math.ceil(itemsLeft /currentRatePerDay);
+
+                currentCompletion.setText("" + (int) currentCompletionInt);
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        };
+
         completeIn.addTextChangedListener(inputTextWatcher);
+
+        timeSince.addTextChangedListener(startedTextWatcher);
     }
 }
