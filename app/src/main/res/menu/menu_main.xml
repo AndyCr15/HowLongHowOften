@@ -3,8 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.androidandyuk.howlonghowoften.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_days"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="Days"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_weeks"
+        android:orderInCategory="100"
+        android:title="Weeks"
         app:showAsAction="never" />
 </menu>

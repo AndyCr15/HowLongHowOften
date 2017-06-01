@@ -14,6 +14,10 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import static com.androidandyuk.howlonghowoften.MainActivity.completePer;
+import static com.androidandyuk.howlonghowoften.MainActivity.displayTime;
+import static com.androidandyuk.howlonghowoften.MainActivity.multiplier;
+
 /**
  * Created by AndyCr15 on 09/05/2017.
  */
@@ -33,7 +37,7 @@ public class Tab1 extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         final EditText howMany = (EditText) getView().findViewById(R.id.howMany);
-        final EditText completeIn = (EditText) getView().findViewById(R.id.completeIn);
+        final EditText completeIn = (EditText) getView().findViewById(R.id.completeIn1);
         final TextView projectedEnd = (TextView) getView().findViewById(R.id.projectedEnd);
         final EditText iveDone = (EditText) getView().findViewById(R.id.iveDone);
         final EditText timeSince = (EditText) getView().findViewById(R.id.timeSince);
@@ -48,10 +52,15 @@ public class Tab1 extends Fragment {
             public void afterTextChanged(Editable s) {
 
                 double howManyInt = Integer.parseInt(howMany.getText().toString());
-                double completeInInt = Integer.parseInt(completeIn.getText().toString());
-                double dailyRate = Math.ceil(howManyInt / completeInInt);
+                double completeInInt = 1;
+                try {
+                    completeInInt = Integer.parseInt(completeIn.getText().toString())/multiplier;
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                double dailyRate = howManyInt / completeInInt;
 
-                projectedEnd.setText("" + (int) dailyRate);
+                projectedEnd.setText(completePer(dailyRate));
 
                 if(timeSince.getText() != null){
 
@@ -68,14 +77,26 @@ public class Tab1 extends Fragment {
         TextWatcher startedTextWatcher = new TextWatcher() {
             public void afterTextChanged(Editable s) {
 
-                double howManyInt = Integer.parseInt(howMany.getText().toString());
-                double iveDoneInt = Integer.parseInt(iveDone.getText().toString());
-                double timeSinceInt = Integer.parseInt(timeSince.getText().toString());
-                double currentRatePerDay = (iveDoneInt / timeSinceInt);
+                double howManyInt = 1;
+                double iveDoneInt = 1;
+                double timeSinceInt = 1;
+                try {
+                    howManyInt = Integer.parseInt(howMany.getText().toString());
+                    iveDoneInt = Integer.parseInt(iveDone.getText().toString());
+                    timeSinceInt = Integer.parseInt(timeSince.getText().toString());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                double currentRatePerDay = 0;
+                try {
+                    currentRatePerDay = (iveDoneInt / timeSinceInt);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 double itemsLeft = howManyInt - iveDoneInt;
                 double currentCompletionInt = Math.ceil(itemsLeft /currentRatePerDay);
 
-                currentCompletion.setText("" + (int) currentCompletionInt);
+                currentCompletion.setText(displayTime(currentCompletionInt));
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

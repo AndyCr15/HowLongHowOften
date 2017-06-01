@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
+
+    public static String dayOrWeek = "Day";
+    public static double multiplier = 1;
 
     private static final String TAG = "MainActivity";
 
@@ -85,12 +88,63 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_days) {
+            dayOrWeek = "day";
+            multiplier = 1;
+            updateDayOrWeek();
+            return true;
+        }
+        if (id == R.id.action_weeks) {
+            dayOrWeek = "week";
+            multiplier = 0.142857142857;
+            updateDayOrWeek();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void updateDayOrWeek(){
+        TextView completeInDayOrWeek = (TextView) findViewById(R.id.completeInDayOrWeek);
+        completeInDayOrWeek.setText(dayOrWeek + "s");
+        TextView howManyWillYouDo = (TextView)findViewById(R.id.howManyWillYouDo2);
+        howManyWillYouDo.setText("How many will you do a " + dayOrWeek);
+    }
+
+    public static String displayTime(double days) {
+
+        if (days < 14) {
+            return (int) days + " days";
+        }
+
+        String display = "";
+        int weeks = (int) days / 7;
+        display = weeks + " weeks " + (int) days % 7 + " day";
+        if (days % 7 > 1) {
+            display += "s";
+        }
+
+        return display;
+    }
+
+    public static String completePer(double dailyRate){
+
+        Log.i("dailyRate is ", "" + dailyRate);
+
+        double accuracy = dailyRate - Math.floor(dailyRate);
+
+        if(accuracy>0.857142857 || accuracy == 0 || Math.ceil(dailyRate * 7)>14){
+            // show daily amount
+            return (int) Math.ceil(dailyRate) + " a day";
+        }
+
+        Log.i("Complete Per","Return a per week amount");
+
+        String display = "";
+
+        display += (int) Math.ceil(dailyRate * 7) + " a week";
+
+        return display;
     }
 
     /**
@@ -147,9 +201,6 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     Tab2 tab2 = new Tab2();
                     return tab2;
-                case 2:
-                    Tab3 tab3 = new Tab3();
-                    return tab3;
             }
             return null;
         }
