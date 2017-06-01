@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,12 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import java.util.Calendar;
+
 import static com.androidandyuk.howlonghowoften.MainActivity.completePer;
 import static com.androidandyuk.howlonghowoften.MainActivity.displayTime;
 import static com.androidandyuk.howlonghowoften.MainActivity.multiplier;
+import static com.androidandyuk.howlonghowoften.MainActivity.sdf;
 
 /**
  * Created by AndyCr15 on 09/05/2017.
@@ -26,9 +30,11 @@ public class Tab1 extends Fragment {
 
     private AdView mAdView;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.tab1, container, false);
     }
 
@@ -42,6 +48,7 @@ public class Tab1 extends Fragment {
         final EditText iveDone = (EditText) getView().findViewById(R.id.iveDone);
         final EditText timeSince = (EditText) getView().findViewById(R.id.timeSince);
         final TextView currentCompletion = (TextView) getView().findViewById(R.id.currentCompletion);
+        final TextView dateDone = (TextView) getView().findViewById(R.id.dateDone);
 
 
         mAdView = (AdView) getView().findViewById(R.id.adView);
@@ -96,7 +103,12 @@ public class Tab1 extends Fragment {
                 double itemsLeft = howManyInt - iveDoneInt;
                 double currentCompletionInt = Math.ceil(itemsLeft /currentRatePerDay);
 
+                Calendar now = Calendar.getInstance();
+                now.add(Calendar.DATE, (int)currentCompletionInt);
+                Log.i("Target Date ",""+ sdf.format(now.getTime()));
+
                 currentCompletion.setText(displayTime(currentCompletionInt));
+                dateDone.setText("Finished by " + sdf.format(now.getTime()));
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -110,4 +122,7 @@ public class Tab1 extends Fragment {
 
         timeSince.addTextChangedListener(startedTextWatcher);
     }
+
+
+
 }

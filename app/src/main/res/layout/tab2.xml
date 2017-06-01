@@ -148,7 +148,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@color/colorAccent"
-            android:gravity="center_horizontal"
+            android:gravity="center_vertical|center_horizontal"
             android:orientation="horizontal">
 
             <TextView
@@ -163,17 +163,17 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/timeSince"
-                android:inputType="number"
+                android:id="@+id/timeSince2"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_weight="0"
+                android:inputType="number"
                 android:textAlignment="center"
                 android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/startedDayOrWeek"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -182,6 +182,16 @@
                 android:textAlignment="textStart"
                 android:textColor="@color/common_google_signin_btn_text_dark_default"
                 android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="0"
+                android:onClick="donePicker2"
+                ads:srcCompat="@android:drawable/ic_menu_my_calendar" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -196,7 +206,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:text="Current rate, completion  in "
+                android:text="Current rate, completion in "
                 android:textAlignment="textEnd"
                 android:textColor="@color/common_google_signin_btn_text_dark_default"
                 android:textSize="18sp" />
@@ -211,6 +221,24 @@
                 android:textColor="@color/common_google_signin_btn_text_dark_default"
                 android:textSize="18sp" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="0"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dateDone"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="New projected finish date"
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout

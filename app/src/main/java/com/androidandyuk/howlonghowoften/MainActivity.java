@@ -1,5 +1,8 @@
 package com.androidandyuk.howlonghowoften;
 
+import android.app.DatePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,9 +17,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +40,12 @@ public class MainActivity extends AppCompatActivity {
 
     public static String dayOrWeek = "Day";
     public static double multiplier = 1;
+
+    public static SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
+    public Calendar today;
+    public DatePickerDialog.OnDateSetListener datePickerSetListener;
+    public DatePickerDialog.OnDateSetListener donePickerSetListener;
+    public DatePickerDialog.OnDateSetListener donePickerSetListener2;
 
     private static final String TAG = "MainActivity";
 
@@ -53,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
-
+        today = Calendar.getInstance();
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -70,7 +85,118 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
 
+        datePickerSetListener = new DatePickerDialog.OnDateSetListener()
+        {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                Calendar date = Calendar.getInstance(TimeZone.getDefault());
+                date.set(year, month, day);
 
+                int chosenDOY = date.get(Calendar.DAY_OF_YEAR);
+                int todayDOY = today.get(Calendar.DAY_OF_YEAR);
+                int diff = (chosenDOY - todayDOY) + (date.get(Calendar.YEAR)-today.get(Calendar.YEAR))*365;
+
+                final EditText completeIn = (EditText) findViewById(R.id.completeIn1);
+
+                completeIn.setText(Integer.toString(diff));
+
+            }
+        };
+
+        donePickerSetListener = new DatePickerDialog.OnDateSetListener()
+        {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                Calendar date = Calendar.getInstance(TimeZone.getDefault());
+                date.set(year, month, day);
+
+                int chosenDOY = date.get(Calendar.DAY_OF_YEAR);
+                int todayDOY = today.get(Calendar.DAY_OF_YEAR);
+                int diff = (todayDOY - chosenDOY) + (today.get(Calendar.YEAR)-date.get(Calendar.YEAR))*365;
+
+                final EditText timeSince = (EditText) findViewById(R.id.timeSince);
+
+                timeSince.setText(Integer.toString(diff));
+
+            }
+        };
+
+        donePickerSetListener2 = new DatePickerDialog.OnDateSetListener()
+        {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                Calendar date = Calendar.getInstance(TimeZone.getDefault());
+                date.set(year, month, day);
+
+                int chosenDOY = date.get(Calendar.DAY_OF_YEAR);
+                int todayDOY = today.get(Calendar.DAY_OF_YEAR);
+                int diff = (todayDOY - chosenDOY) + (today.get(Calendar.YEAR)-date.get(Calendar.YEAR))*365;
+
+                final EditText timeSince2 = (EditText) findViewById(R.id.timeSince2);
+
+                timeSince2.setText(Integer.toString(diff));
+
+            }
+        };
+
+
+    }
+
+    public void calPicker(View view){
+
+        int year = today.get(Calendar.YEAR);
+        int month = today.get(Calendar.MONTH);
+        int day = today.get(Calendar.DAY_OF_MONTH);
+
+        dayOrWeek = "day";
+        multiplier = 1;
+        updateDayOrWeek();
+
+        DatePickerDialog dialog = new DatePickerDialog(
+                MainActivity.this,
+                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                datePickerSetListener,
+                year, month, day);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+    }
+
+    public void donePicker(View view){
+
+        int year = today.get(Calendar.YEAR);
+        int month = today.get(Calendar.MONTH);
+        int day = today.get(Calendar.DAY_OF_MONTH);
+
+        dayOrWeek = "day";
+        multiplier = 1;
+        updateDayOrWeek();
+
+        DatePickerDialog dialog = new DatePickerDialog(
+                MainActivity.this,
+                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                donePickerSetListener,
+                year, month, day);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+    }
+
+    public void donePicker2(View view){
+
+        int year = today.get(Calendar.YEAR);
+        int month = today.get(Calendar.MONTH);
+        int day = today.get(Calendar.DAY_OF_MONTH);
+
+        dayOrWeek = "day";
+        multiplier = 1;
+        updateDayOrWeek();
+
+        DatePickerDialog dialog = new DatePickerDialog(
+                MainActivity.this,
+                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                donePickerSetListener2,
+                year, month, day);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
     }
 
 

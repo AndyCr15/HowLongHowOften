@@ -15,8 +15,11 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import java.util.Calendar;
+
 import static com.androidandyuk.howlonghowoften.MainActivity.displayTime;
 import static com.androidandyuk.howlonghowoften.MainActivity.multiplier;
+import static com.androidandyuk.howlonghowoften.MainActivity.sdf;
 
 /**
  * Created by AndyCr15 on 09/05/2017.
@@ -40,8 +43,9 @@ public class Tab2 extends Fragment {
         final EditText completeIn = (EditText) getView().findViewById(R.id.completeIn2);
         final TextView projectedEnd = (TextView) getView().findViewById(R.id.projectedEnd);
         final EditText iveDone = (EditText) getView().findViewById(R.id.iveDone);
-        final EditText timeSince = (EditText) getView().findViewById(R.id.timeSince);
+        final EditText timeSince = (EditText) getView().findViewById(R.id.timeSince2);
         final TextView currentCompletion = (TextView) getView().findViewById(R.id.currentCompletion);
+        final TextView dateDone = (TextView) getView().findViewById(R.id.dateDone);
 
         mAdView = (AdView) getView().findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -92,8 +96,12 @@ public class Tab2 extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                Calendar now = Calendar.getInstance();
+                now.add(Calendar.DATE, (int)currentCompletionInt);
+                Log.i("Target Date ",""+ sdf.format(now.getTime()));
 
                 currentCompletion.setText(displayTime(currentCompletionInt));
+                dateDone.setText("Finished by " + sdf.format(now.getTime()));
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
