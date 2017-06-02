@@ -49,7 +49,14 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-
+    public static double howManyInt;
+    public static double completeInInt;
+    public static double dailyRate;
+    public static double iveDoneInt;
+    public static double itemsLeft;
+    public static double currentCompletionInt;
+    public static double currentRatePerDay;
+    public static double timeSinceInt;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -85,8 +92,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
 
-        datePickerSetListener = new DatePickerDialog.OnDateSetListener()
-        {
+        datePickerSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 Calendar date = Calendar.getInstance(TimeZone.getDefault());
@@ -94,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
                 int chosenDOY = date.get(Calendar.DAY_OF_YEAR);
                 int todayDOY = today.get(Calendar.DAY_OF_YEAR);
-                int diff = (chosenDOY - todayDOY) + (date.get(Calendar.YEAR)-today.get(Calendar.YEAR))*365;
+                int diff = (chosenDOY - todayDOY) + (date.get(Calendar.YEAR) - today.get(Calendar.YEAR)) * 365;
 
                 final EditText completeIn = (EditText) findViewById(R.id.completeIn1);
 
@@ -103,8 +109,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        donePickerSetListener = new DatePickerDialog.OnDateSetListener()
-        {
+        donePickerSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 Calendar date = Calendar.getInstance(TimeZone.getDefault());
@@ -112,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
                 int chosenDOY = date.get(Calendar.DAY_OF_YEAR);
                 int todayDOY = today.get(Calendar.DAY_OF_YEAR);
-                int diff = (todayDOY - chosenDOY) + (today.get(Calendar.YEAR)-date.get(Calendar.YEAR))*365;
+                int diff = (todayDOY - chosenDOY) + (today.get(Calendar.YEAR) - date.get(Calendar.YEAR)) * 365;
 
                 final EditText timeSince = (EditText) findViewById(R.id.timeSince);
 
@@ -121,8 +126,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        donePickerSetListener2 = new DatePickerDialog.OnDateSetListener()
-        {
+        donePickerSetListener2 = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 Calendar date = Calendar.getInstance(TimeZone.getDefault());
@@ -130,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
                 int chosenDOY = date.get(Calendar.DAY_OF_YEAR);
                 int todayDOY = today.get(Calendar.DAY_OF_YEAR);
-                int diff = (todayDOY - chosenDOY) + (today.get(Calendar.YEAR)-date.get(Calendar.YEAR))*365;
+                int diff = (todayDOY - chosenDOY) + (today.get(Calendar.YEAR) - date.get(Calendar.YEAR)) * 365;
 
                 final EditText timeSince2 = (EditText) findViewById(R.id.timeSince2);
 
@@ -142,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void calPicker(View view){
+    public void calPicker(View view) {
 
         int year = today.get(Calendar.YEAR);
         int month = today.get(Calendar.MONTH);
@@ -161,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    public void donePicker(View view){
+    public void donePicker(View view) {
 
         int year = today.get(Calendar.YEAR);
         int month = today.get(Calendar.MONTH);
@@ -180,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    public void donePicker2(View view){
+    public void donePicker2(View view) {
 
         int year = today.get(Calendar.YEAR);
         int month = today.get(Calendar.MONTH);
@@ -230,10 +234,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void updateDayOrWeek(){
+    public void updateDayOrWeek() {
         TextView completeInDayOrWeek = (TextView) findViewById(R.id.completeInDayOrWeek);
         completeInDayOrWeek.setText(dayOrWeek + "s");
-        TextView howManyWillYouDo = (TextView)findViewById(R.id.howManyWillYouDo2);
+        TextView howManyWillYouDo = (TextView) findViewById(R.id.howManyWillYouDo2);
         howManyWillYouDo.setText("How many will you do a " + dayOrWeek);
     }
 
@@ -245,7 +249,12 @@ public class MainActivity extends AppCompatActivity {
 
         String display = "";
         int weeks = (int) days / 7;
-        display = weeks + " weeks " + (int) days % 7 + " day";
+        display = weeks + " weeks";
+
+        if ((int) days % 7 > 0) {
+            display += " " + (int) days % 7 + " day";
+        }
+
         if (days % 7 > 1) {
             display += "s";
         }
@@ -253,18 +262,18 @@ public class MainActivity extends AppCompatActivity {
         return display;
     }
 
-    public static String completePer(double dailyRate){
+    public static String completePer(double dailyRate) {
 
         Log.i("dailyRate is ", "" + dailyRate);
 
         double accuracy = dailyRate - Math.floor(dailyRate);
 
-        if(accuracy>0.857142857 || accuracy == 0 || Math.ceil(dailyRate * 7)>14){
+        if (accuracy > 0.857142857 || accuracy == 0 || Math.ceil(dailyRate * 7) > 14) {
             // show daily amount
             return (int) Math.ceil(dailyRate) + " a day";
         }
 
-        Log.i("Complete Per","Return a per week amount");
+        Log.i("Complete Per", "Return a per week amount");
 
         String display = "";
 
@@ -320,7 +329,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            switch (position){
+            switch (position) {
                 case 0:
                     Tab1 tab1 = new Tab1();
                     return tab1;
