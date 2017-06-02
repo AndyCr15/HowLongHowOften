@@ -48,11 +48,16 @@ public class Tab2 extends Fragment {
 
         final EditText howMany = (EditText) getView().findViewById(R.id.howMany);
         final EditText completeIn = (EditText) getView().findViewById(R.id.completeIn2);
-        final TextView projectedEnd = (TextView) getView().findViewById(R.id.projectedEnd);
         final EditText iveDone = (EditText) getView().findViewById(R.id.iveDone);
         final EditText timeSince = (EditText) getView().findViewById(R.id.timeSince2);
         final TextView currentCompletion = (TextView) getView().findViewById(R.id.currentCompletion);
         final TextView dateDone = (TextView) getView().findViewById(R.id.dateDone);
+        final TextView projectedEnd = (TextView) getView().findViewById(R.id.projectedEnd);
+
+        howManyInt = 1;
+        iveDoneInt = 0;
+        completeInInt = 1;
+        timeSinceInt = 1;
 
         mAdView = (AdView) getView().findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -69,11 +74,10 @@ public class Tab2 extends Fragment {
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 howManyInt = Integer.parseInt(howMany.getText().toString());
-                completeInInt = 1;
-                Log.i("completeIn is", completeIn.getText().toString());
+
                 try {
                     completeInInt = (Integer.parseInt(completeIn.getText().toString())) * multiplier;
-                    iveDoneInt = Integer.parseInt(iveDone.getText().toString());
+//                    iveDoneInt = Integer.parseInt(iveDone.getText().toString());
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                 }
@@ -87,17 +91,14 @@ public class Tab2 extends Fragment {
         TextWatcher startedTextWatcher = new TextWatcher() {
             public void afterTextChanged(Editable s) {
 
-                howManyInt = 1;
-                iveDoneInt = 1;
-                timeSinceInt = 1;
+
                 try {
-                    howManyInt = Integer.parseInt(howMany.getText().toString());
-                    iveDoneInt = Integer.parseInt(iveDone.getText().toString());
+//                    howManyInt = Integer.parseInt(howMany.getText().toString());
+//                    iveDoneInt = Integer.parseInt(iveDone.getText().toString());
                     timeSinceInt = Integer.parseInt(timeSince.getText().toString());
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                 }
-                double currentCompletionInt = 0;
                 try {
                     currentRatePerDay = (iveDoneInt / timeSinceInt);
                     itemsLeft = howManyInt - iveDoneInt;
@@ -105,12 +106,9 @@ public class Tab2 extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                Calendar now = Calendar.getInstance();
-                now.add(Calendar.DATE, (int) currentCompletionInt);
-                Log.i("Target Date ", "" + sdf.format(now.getTime()));
 
-                currentCompletion.setText(displayTime(currentCompletionInt));
-                dateDone.setText("Finished by " + sdf.format(now.getTime()));
+                updateDisplay();
+
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -126,9 +124,9 @@ public class Tab2 extends Fragment {
                 iveDoneInt = 0;
                 timeSinceInt = 1;
                 try {
-                    howManyInt = Integer.parseInt(howMany.getText().toString());
+//                    howManyInt = Integer.parseInt(howMany.getText().toString());
                     iveDoneInt = Integer.parseInt(iveDone.getText().toString());
-                    timeSinceInt = Integer.parseInt(timeSince.getText().toString());
+//                    timeSinceInt = Integer.parseInt(timeSince.getText().toString());
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                 }
@@ -141,20 +139,7 @@ public class Tab2 extends Fragment {
                 itemsLeft = howManyInt - iveDoneInt;
                 currentCompletionInt = Math.ceil(itemsLeft / currentRatePerDay);
 
-                Calendar now = Calendar.getInstance();
-                now.add(Calendar.DATE, (int) currentCompletionInt);
-                Log.i("Target Date ", "" + sdf.format(now.getTime()));
-
-                currentCompletion.setText(displayTime(currentCompletionInt));
-                dateDone.setText("Finished by " + sdf.format(now.getTime()));
-
-                // now update the daily rate, considering some have been done
-
-                double projectedEndInt = Math.ceil(itemsLeft / completeInInt);
-
-                projectedEnd.setText(displayTime(projectedEndInt));
-
-
+                updateDisplay();
 
             }
 
@@ -174,5 +159,23 @@ public class Tab2 extends Fragment {
         timeSince.addTextChangedListener(startedTextWatcher);
     }
 
+    public void updateDisplay() {
+
+        final TextView projectedEnd = (TextView) getView().findViewById(R.id.projectedEnd);
+        final TextView currentCompletion = (TextView) getView().findViewById(R.id.currentCompletion);
+        final TextView dateDone = (TextView) getView().findViewById(R.id.dateDone);
+
+        Calendar now = Calendar.getInstance();
+        now.add(Calendar.DATE, (int) currentCompletionInt);
+        Log.i("Target Date ", "" + sdf.format(now.getTime()));
+
+        currentCompletion.setText(displayTime(currentCompletionInt));
+        dateDone.setText("Finished by " + sdf.format(now.getTime()));
+
+        double projectedEndInt = Math.ceil(itemsLeft / completeInInt);
+
+        projectedEnd.setText(displayTime(projectedEndInt));
+
+    }
 
 }

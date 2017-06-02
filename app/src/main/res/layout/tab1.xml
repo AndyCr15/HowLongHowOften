@@ -87,6 +87,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/youllBe"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@color/colorPrimary"
@@ -219,6 +220,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/currentRate"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_weight="0"
