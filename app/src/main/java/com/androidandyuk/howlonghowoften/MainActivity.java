@@ -49,14 +49,14 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    public static double howManyInt;
-    public static double completeInInt;
-    public static double dailyRate;
-    public static double iveDoneInt;
-    public static double itemsLeft;
-    public static double currentCompletionInt;
-    public static double currentRatePerDay;
-    public static double timeSinceInt;
+    public static double howManyInt, howManyInt2;
+    public static double completeInInt, completeInInt2;
+    public static double dailyRate, dailyRate2;
+    public static double iveDoneInt, iveDoneInt2;
+    public static double itemsLeft, itemsLeft2;
+    public static double currentCompletionInt, currentCompletionInt2;
+    public static double currentRatePerDay, currentRatePerDay2;
+    public static double timeSinceInt, timeSinceInt2;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 

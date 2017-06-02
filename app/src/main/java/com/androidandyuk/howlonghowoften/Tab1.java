@@ -66,9 +66,8 @@ public class Tab1 extends Fragment {
         TextWatcher inputTextWatcher = new TextWatcher() {
             public void afterTextChanged(Editable s) {
 
-                howManyInt = Integer.parseInt(howMany.getText().toString());
-
                 try {
+                    howManyInt = Integer.parseInt(howMany.getText().toString());
                     completeInInt = Integer.parseInt(completeIn.getText().toString()) / multiplier;
 //                    iveDoneInt = Integer.parseInt(iveDone.getText().toString());
                 } catch (NumberFormatException e) {
